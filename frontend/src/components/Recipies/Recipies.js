@@ -12,7 +12,7 @@ function Recipies({ recipies }) {
             <img className="col" src={recipe.imgUrl} alt="Recipe" />
             <div className="container col">
               <p>{recipe.description}</p>
-              <Link to={recipe.fields.slug}>
+              <Link to={recipe.name}>
                 <button className="btn btn-info" type="button">
                   Click here to see full Recipe
                 </button>
