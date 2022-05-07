@@ -3,10 +3,8 @@ import mongoose from "mongoose";
 import express from "express";
 import recipeSchema from "./models/recipeSchema.js";
 import recipesRoute from "./Routes/recipesRoute.js";
+import recipeRoute from "./Routes/recipeRoute.js";
 const app = express();
-
-app.use(express.json());
-app.use("/home", recipesRoute);
 
 const connection = `mongodb+srv://panaka:${process.env.PW}@cluster0.sacs6.mongodb.net/recipe?retryWrites=true&w=majority`;
 
@@ -16,4 +14,8 @@ mongoose.connection.on(
   console.error.bind(console, "connection error")
 );
 
-app.listen("3000", () => console.log("server is running"));
+app.use(express.json());
+app.use("/", recipesRoute);
+app.use("/", recipeRoute);
+
+app.listen("5000", () => console.log("server is running"));
