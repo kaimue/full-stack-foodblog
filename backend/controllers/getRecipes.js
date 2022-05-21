@@ -1,13 +1,25 @@
 import recipe from "../models/recipe.js";
 
-const getRecipes = async (req, res) => {
+export const getRecipes = async (req, res) => {
   try {
     const recipes = await recipe.find({});
-    console.log(recipes);
+    console.log(req);
     await res.json(recipes);
   } catch (error) {
     res.status(500).send("Error getting recipes");
   }
 };
 
-export default getRecipes;
+export const getRecipeByKeyword = async (req, res) => {
+  const { q } = req.query;
+  console.log(req.query);
+  try {
+    const recipeResults = await recipe.find({
+      name: { $regex: q, $options: "$i" },
+    });
+
+    await res.json(recipeResults);
+  } catch (error) {
+    res.status(500).send("Error getting recipes");
+  }
+};

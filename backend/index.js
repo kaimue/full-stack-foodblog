@@ -2,7 +2,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import express from "express";
 import recipes from "./routes/recipes.js";
-// import recipe from "./routes/recipe.js";
+import searchRecipes from "./routes/searchRecipes.js";
 import cors from "cors";
 
 const app = express();
@@ -18,6 +18,5 @@ db.once("open", () => console.log("Connected to Mongoose."));
 
 app.use(express.json());
 app.use("/", recipes);
-// app.use("/", recipe);
 
 app.listen("5000", () => console.log("server is running"));
