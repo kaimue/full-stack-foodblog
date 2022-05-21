@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [recipies, setRecipies] = useState([]);
+  const [wordQuery, setWordQuery] = useState("React");
 
   useEffect(() => {
     const fetchRecipies = async () => {
@@ -27,6 +28,27 @@ function App() {
     fetchRecipies();
   }, []);
 
+  useEffect(() => {
+    const searchRecipies = async () => {
+      const url = `http://localhost:5000/recipes/?${wordQuery}`;
+      try {
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("searchbla" + data);
+          setRecipies(data);
+        } else {
+          console.error("Fetch error!");
+          alert("There has been an error!");
+        }
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
+    searchRecipies();
+  }, []);
+
   return (
     <div className="container">
       <div className="p-3 mb-2 bg-light text-dark">
@@ -37,9 +59,19 @@ function App() {
           prefer regional products and also avoid additives. From now on we wish
           you a lot of fun discovering and cooking.
         </p>
+        <div class="form-group">
+          <label>Search:</label>
+          <input
+            class="form-control"
+            onChange={(event) => setWordQuery(event.target.value)}
+            type="text"
+            placeholder="Search Hacker News ..."
+          />
+        </div>
       </div>
       <Routes>
         <Route path="/" element={<Recipies recipies={recipies} />} />
+        <Route path="/:name" element={<SingleRecipie recipies={recipies} />} />
       </Routes>
       <div className="p-3 mb-2 bg-light text-dark">
         <p>© 2022 | My Cook Book Blog - created by Natalia, Patrizio & Kai</p>

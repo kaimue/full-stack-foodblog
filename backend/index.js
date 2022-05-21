@@ -1,24 +1,23 @@
 import "dotenv/config";
 import mongoose from "mongoose";
 import express from "express";
-import recipeSchema from "./models/recipeSchema.js";
-import recipesRoute from "./Routes/recipesRoute.js";
-import recipeRoute from "./Routes/recipeRoute.js";
+import recipes from "./routes/recipes.js";
+// import recipe from "./routes/recipe.js";
 import cors from "cors";
 
 const app = express();
 
+app.use(cors());
+
 const connection = `mongodb+srv://panaka:${process.env.PW}@cluster0.sacs6.mongodb.net/recipe?retryWrites=true&w=majority`;
 
 mongoose.connect(connection);
-mongoose.connection.on(
-  "error",
-  console.error.bind(console, "connection error")
-);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", () => console.log("Connected to Mongoose."));
 
-app.use(cors());
 app.use(express.json());
-app.use("/", recipesRoute);
-app.use("/", recipeRoute);
+app.use("/", recipes);
+// app.use("/", recipe);
 
 app.listen("5000", () => console.log("server is running"));

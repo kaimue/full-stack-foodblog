@@ -1,5 +1,5 @@
 import express from "express";
-import recipe from "../models/recipeSchema.js";
+import recipe from "../models/recipe.js";
 const router = express.Router();
 
 router.get("/recipes/:name", (req, res) => {
