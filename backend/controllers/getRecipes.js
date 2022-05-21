@@ -3,7 +3,7 @@ import recipe from "../models/recipe.js";
 export const getRecipes = async (req, res) => {
   try {
     const recipes = await recipe.find({});
-    console.log(req);
+    console.log(recipes);
     await res.json(recipes);
   } catch (error) {
     res.status(500).send("Error getting recipes");

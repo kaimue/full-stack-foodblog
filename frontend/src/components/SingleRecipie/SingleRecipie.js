@@ -16,11 +16,7 @@ function SingleRecipie({ recipies }) {
           <img className="col" src={recipe.imgUrl} alt="Recipe" />
           <div className="container col">
             <p>{recipe.description}</p>
-            <Link to={recipe.name}>
-              <button className="btn btn-info" type="button">
-                Click here to see full Recipe
-              </button>
-            </Link>
+            <p>{recipe.ingridientTable}</p>
           </div>
         </div>
         <br></br>
